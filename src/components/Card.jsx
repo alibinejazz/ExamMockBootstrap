@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 
 const Card = () => {
   const [hotels, setHotels] = useState([]);
-
   const nav = useNavigate();
 
   useEffect(() => {
     const fetchUserData = () => {
-      fetch("https://mocki.io/v1/6756a93f-6a4d-4f7d-b0aa-d52eedaf7089")
+      fetch("http://localhost:8080/hotels/getall")
         .then(response => response.json())
         .then(data => {
           setHotels(data);
@@ -21,28 +20,29 @@ const Card = () => {
     fetchUserData();
   }, []);
 
-  function toBook(){
-    nav("/bookForm");
+  function toBook(id){
+    nav(`/bookForm/${id}`);
   }
+
+
 
   return (
     <div>
-      {hotels.map((hotel, index) => (
-        <div key={index} className="card mb-2" style={{ maxWidth: "100%" }}>
+      {hotels.map((hotel) => (
+        <div key={hotel.id} className="card mb-2" style={{ maxWidth: "50%", marginLeft:"450px", border:"5px solid black" }}>
           <div className="row g-0">
             <div className="col-md-4">
-              <img src={hotel.image_link} className="img-fluid rounded-start" alt={hotel.name} width={100} />
+              <img src={hotel.imageLink} className="img-fluid rounded-start" alt={hotel.name} width={400}/>
             </div>
-            <div className="col-md-8">
+            <div className="col-md-6">
               <div className="card-body">
                 
-                <h5 className="card-title">{hotel.name}</h5>
-                <p className="card-text">{hotel.short_description}</p>
+                <h5 className="card-title"><Link to={`/detailPage/${hotel.id}`}>{hotel.name}</Link></h5>
+                <p>{hotel.shortDescription}</p>
                 <p className="card-text">{hotel.location}</p>
                 
                 <p className="card-text">{hotel.pool ? "yes, pool is there" : "no, pool is not there"}</p>
-                <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-                <button onClick={toBook}>Book it</button>
+                <button onClick={()=>toBook(hotel.id)}>Book it</button>
               </div>
             </div>
           </div>

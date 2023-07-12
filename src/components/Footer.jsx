@@ -1,7 +1,7 @@
 import React from "react";
 
 const Footer = () => (
-  <footer className="page-footer font-small blue pt-4" style={{ position: "sticky"}}>
+  <footer className="page-footer font-small blue pt-4" style={{ position: "sticky", }}>
     <div className="container-fluid text-center text-md-left">
       <div className="row">
         <div className="col-md-15 mt-md-0 mt-3" style={{ backgroundColor: "black", color: "white" }}>
